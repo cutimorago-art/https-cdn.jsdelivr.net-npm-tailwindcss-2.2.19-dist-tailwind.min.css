@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zentropay Online Banking</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<header class="bg-white shadow p-4 flex justify-between items-center">
+<h1 class="text-2xl font-bold text-blue-600">Zentropay Bank</h1>
+<nav>
+  <a href="#services" class="mx-2 text-blue-600 hover:underline">Services</a>
+  <a href="#create-account" class="mx-2 text-blue-600 hover:underline">Create Account</a>
+  <a href="#login" class="mx-2 text-blue-600 hover:underline">Login</a>
+  <a href="#contact" class="mx-2 text-blue-600 hover:underline">Contact</a>
+</nav>
+</header>
+
+<section class="text-center py-10 bg-blue-50">
+<h2 class="text-3xl font-bold">Smart. Secure. Seamless.</h2>
+<p class="mt-2 text-lg">Welcome to Zentropay – the future of online banking.</p>
+</section>
+
+<section id="services" class="p-6">
+<h3 class="text-2xl font-semibold mb-4">Our Services</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="bg-white p-4 rounded shadow">
+    <h4 class="text-xl font-bold">Online Deposits</h4>
+    <p>Securely deposit money into your Zentropay account anytime, anywhere.</p>
+  </div>
+  <div class="bg-white p-4 rounded shadow">
+    <h4 class="text-xl font-bold">Instant Transfers</h4>
+    <p>Send money to anyone, anywhere with fast and safe transfers.</p>
+  </div>
+  <div class="bg-white p-4 rounded shadow">
+    <h4 class="text-xl font-bold">Account Management</h4>
+    <p>Track your balance, monitor transactions, manage funds, loans, and crypto.</p>
+  </div>
+</div>
+</section>
+
+<section id="create-account" class="p-6 bg-white mt-10">
+<h3 class="text-2xl font-semibold mb-4">Create a New Account</h3>
+<form id="registerForm" class="grid grid-cols-1 gap-4 max-w-xl mx-auto" enctype="multipart/form-data">
+  <input type="text" name="name" placeholder="Full Name" class="p-2 border rounded" required />
+  <input type="email" name="email" placeholder="Email Address" class="p-2 border rounded" required />
+  <input type="password" name="password" placeholder="Password" class="p-2 border rounded" required />
+  <input type="date" name="dob" placeholder="Date of Birth" class="p-2 border rounded" required />
+  <select name="country" class="p-2 border rounded" required>
+    <option value="MYR">🇲🇾 Malaysia</option>
+    <option value="SGD">🇸🇬 Singapore</option>
+    <option value="USD">🇺🇸 USA</option>
+    <option value="EUR">🇪🇺 Europe</option>
+  </select>
+  <input type="text" name="bankDetails" placeholder="Bank Account Details" class="p-2 border rounded" required />
+  <label class="font-semibold">Upload KYC Documents</label>
+  <input type="file" name="idFront" required />
+  <input type="file" name="idBack" required />
+  <input type="file" name="cardFront" required />
+  <input type="file" name="cardBack" required />
+  <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">Create Account</button>
+</form>
+</section>
+
+<section id="login" class="p-6 bg-gray-100 mt-10">
+<h3 class="text-2xl font-semibold mb-4">Login to Your Account</h3>
+<form id="loginForm" class="grid grid-cols-1 gap-4 max-w-xl mx-auto">
+  <input type="email" name="email" placeholder="Email" class="p-2 border rounded" required />
+  <input type="password" name="password" placeholder="Password" class="p-2 border rounded" required />
+  <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Login</button>
+</form>
+<div id="loginError" class="text-red-600 mt-2"></div>
+</section>
+
+<section id="dashboard" class="p-6 bg-white mt-10 hidden">
+<h3 class="text-2xl font-semibold mb-4">User Dashboard</h3>
+<p>Welcome <span id="username"></span>! Account Number: <span id="accountNumber">#0001</span></p>
+<p>Balance: <span id="balance"></span></p>
+<h4 class="mt-4 font-semibold">Transactions:</h4>
+<div id="transactions" class="text-sm"></div>
+
+<button onclick="makeTransfer()" class="bg-blue-600 text-white p-2 mt-2">Make Transfer</button>
+<button onclick="requestLoan()" class="bg-yellow-600 text-white p-2 mt-2">Request Loan</button>
+<button onclick="buyCrypto('BTC',0.01)" class="bg-purple-600 text-white p-2 mt-2">Buy 0.01 BTC</button>
+<button onclick="sellCrypto('BTC',0.01)" class="bg-purple-600 text-white p-2 mt-2">Sell 0.01 BTC</button>
+
+<h4 class="mt-4 font-semibold">Chat with Support:</h4>
+<div id="chatBox" class="bg-gray-100 p-2 h-40 overflow-y-scroll mb-2"></div>
+<input type="text" id="chatInput" placeholder="Type a message" class="p-2 border rounded w-full" />
+<button onclick="sendMessage()" class="bg-green-600 text-white p-2 mt-2">Send</button>
+</section>
+
+<section id="admin" class="p-6 bg-blue-50 mt-10 hidden">
+<h3 class="text-2xl font-semibold mb-4">Admin Dashboard</h3>
+<p>Manage users, KYC approvals, loans, funds, and chat responses.</p>
+
+<h4 class="mt-4 font-semibold">Users:</h4>
+<div id="userList" class="text-sm"></div>
+
+<h4 class="mt-4 font-semibold">Chat Inbox:</h4>
+<div id="adminChatBox" class="bg-gray-100 p-2 h-40 overflow-y-scroll mb-2"></div>
+<input type="text" id="adminChatInput" placeholder="Reply message" class="p-2 border rounded w-full" />
+<button onclick="adminReply()" class="bg-green-600 text-white p-2 mt-2">Send Reply</button>
+</section>
+
+<section id="contact" class="p-6 bg-gray-100 mt-10">
+<h3 class="text-2xl font-semibold mb-4">Contact Us</h3>
+<p class="mb-4">Email: admin@zentropay.com</p>
+</section>
+
+<footer class="text-center p-4 mt-10 bg-gray-200">
+<p>&copy; 2025 Zentropay Bank. All rights reserved.</p>
+</footer>
+
+<script>
+let currentUser=null;
+let isAdmin=false;
+
+// ---------------- LOGIN ----------------
+document.getElementById('loginForm').onsubmit=async (e)=>{
+  e.preventDefault();
+  const email=e.target.email.value;
+  const password=e.target.password.value;
+  const res = await fetch('/api/login',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,password})});
+  const data = await res.json();
+  if(data.accountStatus==='suspended'){
+    document.getElementById('loginError').innerHTML='Account suspended. Contact support via chat.';
+    currentUser={email};
+    return;
+  }
+  currentUser={email};
+  isAdmin=(email==='admin@zentropay.com'); 
+  document.getElementById('dashboard').classList.remove('hidden');
+  document.getElementById('username').innerText=email;
+  loadTransactions();
+  if(isAdmin) loadUsers();
+}
+
+// ---------------- REGISTER ----------------
+document.getElementById('registerForm').onsubmit=async (e)=>{
+  e.preventDefault();
+  const formData=new FormData(e.target);
+  const res = await fetch('/api/register',{method:'POST', body:formData});
+  const data=await res.json();
+  alert(data.message);
+  e.target.reset();
+}
+
+// ---------------- TRANSACTIONS ----------------
+async function loadTransactions(){
+  const res = await fetch(`/api/transactions/${currentUser.email}`);
+  const data = await res.json();
+  document.getElementById('transactions').innerHTML = data.map(t=>`${t.type} ${t.amount} at ${new Date(t.timestamp).toLocaleString()}`).join('<br>');
+}
+
+// ---------------- TRANSFER ----------------
+async function makeTransfer(){
+  const toEmail = prompt("Recipient Email:");
+  const amount = prompt("Amount to transfer:");
+  await fetch('/api/transfer',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({fromEmail:currentUser.email,toEmail,amount})});
+  loadTransactions();
+}
+
+// ---------------- LOANS ----------------
+async function requestLoan(){
+  const amount = prompt("Loan amount:");
+  await fetch('/api/loan/request',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({userEmail:currentUser.email,amount})});
+  alert("Loan requested");
+}
+
+// ---------------- CRYPTO ----------------
+async function buyCrypto(symbol,amt){
+  await fetch('/api/crypto',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({userEmail:currentUser.email,type:'buy',crypto:symbol,amount:amt})});
+}
+async function sellCrypto(symbol,amt){
+  await fetch('/api/crypto',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({userEmail:currentUser.email,type:'sell',crypto:symbol,amount:amt})});
+}
+
+// ---------------- CHAT ----------------
+async function sendMessage(){
+  const text=document.getElementById('chatInput').value;
+  await fetch('/api/chat/send',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({userEmail:currentUser.email,from:'user',text})});
+  document.getElementById('chatInput').value='';
+}
+
+// ---------------- ADMIN ----------------
+async function loadUsers(){
+  const res = await fetch('/api/admin/users');
+  const users = await res.json();
+  document.getElementById('userList').innerHTML = users.map(u=>`<div>${u.email} - ${u.kycStatus} - ${u.accountStatus}</div>`).join('<br>');
+}
+
+async function adminReply(){
+  const text=document.getElementById('adminChatInput').value;
+  await fetch('/api/chat/send',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({userEmail:currentUser.email,from:'admin',text})});
+  document.getElementById('adminChatInput').value='';
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+KYC Verification (Major Upgrade)
+Users must now submit:
+
+Identity Verification Upload:
+ID card (front)
+ID card (back)
+
+Bank & Card Verification
+Bank name
+Account number
+Account name
+
+Debit/Credit card:
+Front image
+Back image
+
+🛡️ Step 4: KYC Status
+System stores:
+JavaScript
+kyc: true  Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: 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
+        uses: content/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments.md
